@@ -22,15 +22,9 @@ header{
 }
 
 #logo{width:200px;}
-
 #fraseLogo{font-size:12px;opacity:0.9}
-
 #organizadoresTexto{font-size:13px;color:#FFD700}
-
-#liturgia{
-    font-size:12px;
-    margin-top:5px;
-}
+#liturgia{font-size:12px;margin-top:5px}
 
 /* CONTROLES */
 .controles{
@@ -47,22 +41,43 @@ button,select,input{
     border:none;
 }
 
-/* CALENDARIO */
+/* 🔥 CALENDARIO FIX */
 #calendario{
     display:grid;
     grid-template-columns:repeat(7,1fr);
     gap:5px;
     padding:10px;
+
+    /* CLAVE */
+    grid-auto-rows:1fr;
 }
 
+/* 🔥 DÍA PERFECTO */
 .dia{
     background:white;
-    min-height:80px;
-    font-size:12px;
     padding:5px;
     border-radius:8px;
+
+    display:flex;
+    flex-direction:column;
+
+    /* CLAVE: TODOS IGUALES */
+    aspect-ratio:1/1;
 }
 
+/* NUMERO */
+.numero{
+    font-weight:bold;
+    font-size:15px;
+}
+
+/* NOMBRE DIA */
+.nombre{
+    font-size:15px;
+    color:#666;
+}
+
+/* HOY */
 .hoy{
     border:2px solid #C9A227;
     background:#fff8e1;
@@ -70,19 +85,19 @@ button,select,input{
 
 /* EVENTOS */
 .evento{
-    font-size:10px;
-    margin-top:3px;
+    font-size:15px;
+    margin-top:2px;
     padding:2px;
     border-radius:4px;
     color:white;
 }
 
-/* PANEL */
-#panel{padding:10px}
-
+/* MOBILE */
 @media(max-width:600px){
-    .dia{min-height:70px;font-size:11px}
+    .numero{font-size:11px}
+    .nombre{font-size:9px}
 }
+
 </style>
 </head>
 
@@ -116,28 +131,15 @@ button,select,input{
 
 <div id="calendario"></div>
 
-<!-- PANEL -->
-<div id="panel">
-<input id="f_fecha" placeholder="dd/mm/aaaa">
-<input id="f_act" placeholder="Actividad">
-<select id="f_tipo">
-<option>Convivio</option>
-<option>Feriado</option>
-<option>Cumple</option>
-<option>Religioso</option>
-</select>
-<input id="f_enc" placeholder="Encargado">
-<button onclick="guardarEvento()">Guardar</button>
-</div>
-
 <script>
 
 /* CONFIG */
-
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRNCek6zPSBLG96i9Rw3vWwKEUoXf_9CoTNQL5xHit4_jFS4mmHO_c8zsEQXVLJKfvxumtx6nL6ZdPi/pub?gid=470000808&single=true&output=csv";
 
 let eventos=[];
 let fechaActual=new Date();
+
+const nombresDias=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
 
 /* ORGANIZADORES */
 const organizadoresMes={
@@ -149,7 +151,6 @@ const organizadoresMes={
     5:"Jorge, Ana, Guada",
     6:"Pachi, Marti, Maria",
     7:"Agustin y Ana",
-
 };
 
 /* COLORES */
@@ -166,7 +167,7 @@ function color(t){
     return {Convivio:"#4A7856",Feriado:"#B33939",Cumple:"#C9A227",Religioso:"#6A4C93"}[t]||"#999";
 }
 
-/* FECHA */
+/* NORMALIZAR */
 function normalizar(f){
     if(f.includes("-")) return f;
     let p=f.split("/");
@@ -175,7 +176,6 @@ function normalizar(f){
 
 /* LITURGIA */
 async function cargarLiturgia(){
-
     let f=fechaActual;
     let fecha=`${f.getFullYear()}-${String(f.getMonth()+1).padStart(2,"0")}-${String(f.getDate()).padStart(2,"0")}`;
 
@@ -188,7 +188,6 @@ async function cargarLiturgia(){
 
         document.getElementById("liturgia").innerHTML=
             `<b>${data.santo || ""}</b> | ${data.tiempo || ""}`;
-
     }catch{
         document.getElementById("liturgia").innerText="";
     }
@@ -241,11 +240,15 @@ function render(){
         div.className="dia";
 
         let fechaObj=new Date(año,mes,d);
+
         if(fechaObj.toDateString()===new Date().toDateString()){
             div.classList.add("hoy");
         }
 
-        div.innerHTML=`<b>${d}</b>`;
+        div.innerHTML=`
+            <div class="numero">${d}</div>
+            <div class="nombre">${nombresDias[fechaObj.getDay()]}</div>
+        `;
 
         let filtro=document.getElementById("filtro").value;
 
@@ -264,24 +267,20 @@ function render(){
     cargarLiturgia();
 }
 
-/* GUARDAR */
-async function guardarEvento(){
+/* SWIPE MOBILE */
+let startX=0;
 
-    let data={
-        fecha:normalizar(f_fecha.value),
-        actividad:f_act.value,
-        tipo:f_tipo.value,
-        encargado:f_enc.value
-    };
+document.addEventListener("touchstart",e=>{
+    startX=e.touches[0].clientX;
+});
 
-    await fetch(API_URL,{
-        method:"POST",
-        body:JSON.stringify(data)
-    });
+document.addEventListener("touchend",e=>{
+    let endX=e.changedTouches[0].clientX;
+    let diff=startX-endX;
 
-    alert("Guardado ✅");
-    cargar();
-}
+    if(diff>50) cambiarMes(1);
+    if(diff<-50) cambiarMes(-1);
+});
 
 /* CONTROLES */
 function hoy(){
