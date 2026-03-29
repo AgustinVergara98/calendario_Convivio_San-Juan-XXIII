@@ -2,187 +2,86 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Calendario Convivio San Juan XXIII</title>
-
-<!-- Tipografía estética -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendario Convivio</title>
 
 <style>
-body {
-    font-family: "Inter", sans-serif;
-    margin: 0;
-    background: #f4f4f2;
-    color: #333;
+body{font-family:Arial;margin:0;background:#f4f4f2}
+
+/* HEADER */
+header{
+    background:#2f3e46;
+    color:white;
+    padding:10px;
 }
 
-/* ===========================
-   ENCABEZADO
-   =========================== */
-header {
-    background: #2f3e46;
-    color: white;
-    padding: 30px 20px;
-    border-bottom: 4px solid #4A7856;
+.header-container{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-.header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
+#logo{width:200px;}
+
+#fraseLogo{font-size:12px;opacity:0.9}
+
+#organizadoresTexto{font-size:13px;color:#FFD700}
+
+#liturgia{
+    font-size:12px;
+    margin-top:5px;
 }
 
-/* LOGO + FRASE */
-.logo-area {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
+/* CONTROLES */
+.controles{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    padding:10px;
 }
 
-#logoConvivio {
-    width: 180px;
-    height: 180px;
-    object-fit: contain;
-    opacity: 0.95;
+button,select,input{
+    padding:8px;
+    border-radius:6px;
+    border:none;
 }
 
-#frasePapa {
-    margin-top: 10px;
-    font-size: 14px;
-    opacity: 0.9;
-    max-width: 180px;
-    line-height: 1.3;
+/* CALENDARIO */
+#calendario{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
+    padding:10px;
 }
 
-#organizadoresMes {
-    margin-top: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    color: #C9A227;
-    background: rgba(255, 255, 255, 0.08);
-    padding: 6px 10px;
-    border-radius: 6px;
-    display: inline-block;
+.dia{
+    background:white;
+    min-height:80px;
+    font-size:12px;
+    padding:5px;
+    border-radius:8px;
 }
 
-/* TEXTO DEL ENCABEZADO */
-.header-text {
-    text-align: left;
-}
-
-#citaBiblica {
-    font-style: italic;
-    opacity: 0.85;
-    margin-top: 6px;
-}
-
-#santoDelDia, #tiempoLiturgico {
-    margin-top: 6px;
-    font-size: 15px;
-    opacity: 0.9;
-}
-
-/* ===========================
-   IMAGEN DEL MES
-   =========================== */
-#imagenMes {
-    width: 100%;
-    max-height: 260px;
-    object-fit: cover;
-    display: block;
-    border-bottom: 1px solid #ddd;
-}
-
-/* ===========================
-   CONTROLES
-   =========================== */
-.controles {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin: 20px 0;
-}
-
-button {
-    padding: 8px 16px;
-    background: #52796f;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background 0.2s ease;
-}
-
-button:hover {
-    background: #3f5f56;
-}
-
-/* ===========================
-   CALENDARIO
-   =========================== */
-#calendario {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-    padding: 20px;
-}
-
-.dia {
-    background: #ffffff;
-    min-height: 110px;
-    border-radius: 12px;
-    padding: 10px;
-    font-size: 13px;
-    cursor: pointer;
-    border: 1px solid #e6e6e6;
-    transition: transform 0.1s ease, box-shadow 0.2s ease;
-}
-
-.dia:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+.hoy{
+    border:2px solid #C9A227;
+    background:#fff8e1;
 }
 
 /* EVENTOS */
-.evento {
-    font-size: 12px;
-    margin-top: 6px;
-    padding: 4px 6px;
-    border-radius: 6px;
-    color: white;
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    font-weight: 500;
+.evento{
+    font-size:10px;
+    margin-top:3px;
+    padding:2px;
+    border-radius:4px;
+    color:white;
 }
 
-/* ===========================
-   MODAL
-   =========================== */
-.modal {
-    display: none;
-    position: fixed;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    top: 0; left: 0;
-}
-
-.modal-content {
-    background: white;
-    margin: 10% auto;
-    padding: 20px;
-    width: 330px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
+/* PANEL */
+#panel{padding:10px}
 
 @media(max-width:600px){
-    #calendario { grid-template-columns: repeat(2, 1fr); }
+    .dia{min-height:70px;font-size:11px}
 }
 </style>
 </head>
@@ -190,277 +89,213 @@ button:hover {
 <body>
 
 <header>
-    <div class="header-container">
-
-        <!-- LOGO + FRASE -->
-        <div class="logo-area">
-            <img src="logo.png" id="logoConvivio" alt="Logo Convivio">
-            <div id="frasePapa">“La paz comienza con una sonrisa.” — San Juan XXIII</div>
-        </div>
-
-        <!-- TEXTO DEL ENCABEZADO -->
-        <div class="header-text">
-            <h2 id="mesActual"></h2>
-            <div id="citaBiblica"></div>
-            <div id="organizadoresMes"></div>
-            <div id="santoDelDia"></div>
-            <div id="tiempoLiturgico"></div>
-        </div>
-
+<div class="header-container">
+    <img src="logo.png" id="logo">
+    <div>
+        <h2 id="mesActual"></h2>
+        <div id="fraseLogo">“La paz comienza con una sonrisa.” — San Juan XXIII</div>
+        <div id="organizadoresTexto"></div>
+        <div id="liturgia"></div>
     </div>
+</div>
 </header>
 
-<img id="imagenMes" src="" alt="Imagen del mes">
-
 <div class="controles">
-    <button onclick="cambiarMes(-1)">◀</button>
-    <button onclick="hoy()">Hoy</button>
-    <button onclick="cambiarMes(1)">▶</button>
+<button onclick="cambiarMes(-1)">◀</button>
+<button onclick="hoy()">Hoy</button>
+<button onclick="cambiarMes(1)">▶</button>
+
+<select id="filtro" onchange="render()">
+<option value="">Todos</option>
+<option>Convivio</option>
+<option>Feriado</option>
+<option>Cumple</option>
+<option>Religioso</option>
+</select>
 </div>
 
 <div id="calendario"></div>
 
-<!-- MODAL -->
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <span onclick="cerrarModal()" style="cursor:pointer; float:right;">✖</span>
-        <h3 id="fechaModal"></h3>
-        <ul id="lista"></ul>
-    </div>
+<!-- PANEL -->
+<div id="panel">
+<input id="f_fecha" placeholder="dd/mm/aaaa">
+<input id="f_act" placeholder="Actividad">
+<select id="f_tipo">
+<option>Convivio</option>
+<option>Feriado</option>
+<option>Cumple</option>
+<option>Religioso</option>
+</select>
+<input id="f_enc" placeholder="Encargado">
+<button onclick="guardarEvento()">Guardar</button>
 </div>
 
 <script>
 
-/* ===========================
-   COLORES LITÚRGICOS
-   =========================== */
-function obtenerColor(tipo){
-    const colores = {
-        "Convivio":"#4A7856",
-        "Feriado":"#B33939",
-        "Cumple":"#C9A227",
-        "Religioso":"#6A4C93"
-    };
-    return colores[tipo] || "#7E8A97";
+/* CONFIG */
+
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRNCek6zPSBLG96i9Rw3vWwKEUoXf_9CoTNQL5xHit4_jFS4mmHO_c8zsEQXVLJKfvxumtx6nL6ZdPi/pub?gid=470000808&single=true&output=csv";
+
+let eventos=[];
+let fechaActual=new Date();
+
+/* ORGANIZADORES */
+const organizadoresMes={
+    0:"Equipo Enero",
+    1:"Equipo Febrero",
+    2:"Leo, Tato, Juli",
+    3:"Mes sin Convivio",
+    4:"Delfi, Agustín, Stefi",
+    5:"Jorge, Ana, Guada",
+    6:"Pachi, Marti, Maria",
+    7:"Agustin y Ana",
+
+};
+
+/* COLORES */
+const coloresLiturgicos={
+    verde:"#4A7856",
+    rojo:"#B33939",
+    morado:"#6A4C93",
+    blanco:"#d6d6d6",
+    rosa:"#E6A4C4",
+    dorado:"#C9A227"
+};
+
+function color(t){
+    return {Convivio:"#4A7856",Feriado:"#B33939",Cumple:"#C9A227",Religioso:"#6A4C93"}[t]||"#999";
 }
 
-/* ICONOS */
-function obtenerIcono(tipo){
-    const iconos = {
-        "Convivio": "🕊️",
-        "Feriado": "🕊️🇦🇷",
-        "Cumple": "🎂",
-        "Religioso": "✝️"
-    };
-    return iconos[tipo] || "📜";
+/* FECHA */
+function normalizar(f){
+    if(f.includes("-")) return f;
+    let p=f.split("/");
+    return `${p[2]}-${p[1].padStart(2,"0")}-${p[0].padStart(2,"0")}`;
 }
 
-/* CITAS BÍBLICAS */
-const citasBiblicas = {
-    0: "“El Señor es mi pastor, nada me faltará.” – Salmo 23",
-    1: "“Dios es amor.” – 1 Juan 4:8",
-    2: "“Mi paz les dejo, mi paz les doy.” – Juan 14:27",
-    3: "“Yo soy la resurrección y la vida.” – Juan 11:25",
-    4: "“El Señor es mi luz y mi salvación.” – Salmo 27",
-    5: "“Todo lo puedo en Cristo que me fortalece.” – Filipenses 4:13",
-    6: "“El que cree en mí tendrá vida eterna.” – Juan 6:47",
-    7: "“El Señor es bueno con todos.” – Salmo 145",
-    8: "“Confía en el Señor de todo corazón.” – Proverbios 3:5",
-    9: "“Este es el día que hizo el Señor.” – Salmo 118",
-    10: "“Den gracias al Señor porque es bueno.” – Salmo 136",
-    11: "“La Palabra se hizo carne.” – Juan 1:14"
-};
+/* LITURGIA */
+async function cargarLiturgia(){
 
-/* ORGANIZADORES DEL MES */
-const organizadores = {
-    2: "Organizan convivio del mes: Leo, Tato, Juli",
-    3: "Organizan convivio del mes: Delfi, Agustín, Stefi",
-    4: "Organizan convivio del mes: Jorge, Ana, Guada",
-    5: "Organizan convivio del mes: Pachi, Marti, María",
-    6: "Organizan convivio del mes: Ana, Juli, Agustín"
-};
+    let f=fechaActual;
+    let fecha=`${f.getFullYear()}-${String(f.getMonth()+1).padStart(2,"0")}-${String(f.getDate()).padStart(2,"0")}`;
 
-/* IMÁGENES POR MES */
-const imagenesMes = {
-    0: "enero.jpg",
-    1: "febrero.jpg",
-    2: "marzo.jpg",
-    3: "abril.jpg",
-    4: "mayo.jpg",
-    5: "junio.jpg",
-    6: "julio.jpg",
-    7: "agosto.jpg",
-    8: "septiembre.jpg",
-    9: "octubre.jpg",
-    10: "noviembre.jpg",
-    11: "diciembre.jpg"
-};
+    try{
+        const res=await fetch(`https://liturgiaargentina.org/api/v1/celebracion/${fecha}`);
+        const data=await res.json();
 
-let eventos = [];
+        document.querySelector("header").style.background =
+            coloresLiturgicos[data.color] || "#2f3e46";
 
-/* ===========================
-   SANTO Y TIEMPO LITÚRGICO
-   =========================== */
-async function cargarSantoDelDia(){
-    let año = fechaActual.getFullYear();
-    let mes = String(fechaActual.getMonth()+1).padStart(2,"0");
-    let dia = String(fechaActual.getDate()).padStart(2,"0");
+        document.getElementById("liturgia").innerHTML=
+            `<b>${data.santo || ""}</b> | ${data.tiempo || ""}`;
 
-    let fecha = `${año}-${mes}-${dia}`;
+    }catch{
+        document.getElementById("liturgia").innerText="";
+    }
+}
 
-    try {
-        const res = await fetch(`https://liturgiaargentina.org/api/v1/celebracion/${fecha}`);
-        const data = await res.json();
+/* CARGAR EVENTOS */
+async function cargar(){
+    const res=await fetch(CSV_URL);
+    const txt=await res.text();
 
-        document.getElementById("santoDelDia").innerText = data.santo || data.celebracion || "—";
-
-        const coloresLiturgicos = {
-            "verde": "#4A7856",
-            "rojo": "#B33939",
-            "morado": "#6A4C93",
-            "blanco": "#E8E8E8",
-            "rosa": "#E6A4C4",
-            "dorado": "#C9A227"
+    eventos=txt.trim().split("\n").slice(1).map(f=>{
+        let c=f.split(",");
+        return {
+            fecha:normalizar(c[0]),
+            actividad:c[1],
+            tipo:c[2],
+            encargado:c[3]
         };
-
-        document.getElementById("tiempoLiturgico").innerHTML =
-            `<span style="color:${coloresLiturgicos[data.color] || '#fff'}">${data.tiempo || ""}</span>`;
-
-    } catch (e) {
-        document.getElementById("santoDelDia").innerText = "";
-        document.getElementById("tiempoLiturgico").innerText = "";
-    }
-}
-
-/* ===========================
-   CARGAR CSV
-   =========================== */
-async function cargarCSV(){
-    try {
-        const res = await fetch("datos.csv");
-        const text = await res.text();
-
-        const separador = text.includes(";") ? ";" : ",";
-        const filas = text.split("\n").slice(1);
-
-        eventos = [];
-
-        filas.forEach(f=>{
-            let c = f.split(separador);
-            if(c.length < 4) return;
-
-            eventos.push({
-                fecha: c[0]?.trim(),
-                actividad: c[1]?.trim(),
-                tipo: c[2]?.trim(),
-                encargado: c[3]?.trim()
-            });
-        });
-
-        render();
-
-    } catch (error) {
-        console.error("Error cargando CSV:", error);
-    }
-}
-
-/* ===========================
-   RENDER DEL CALENDARIO
-   =========================== */
-let fechaActual = new Date();
-const cal = document.getElementById("calendario");
-
-function render(){
-    cal.innerHTML="";
-
-    let año = fechaActual.getFullYear();
-    let mes = fechaActual.getMonth();
-
-    document.getElementById("mesActual").innerText =
-        fechaActual.toLocaleDateString("es-ES",{month:"long",year:"numeric"});
-
-    document.getElementById("citaBiblica").innerText = citasBiblicas[mes];
-    document.getElementById("organizadoresMes").innerText = organizadores[mes] || "";
-    document.getElementById("imagenMes").src = imagenesMes[mes];
-
-    cargarSantoDelDia();
-
-    let primerDia = new Date(año, mes, 1).getDay();
-    let diasMes = new Date(año, mes+1, 0).getDate();
-
-    for(let i=0;i<primerDia;i++) cal.appendChild(document.createElement("div"));
-
-    for(let d=1; d<=diasMes; d++){
-        let fechaStr = `${año}-${String(mes+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-
-        let div = document.createElement("div");
-        div.className = "dia";
-        div.innerHTML = `<strong>${d}</strong>`;
-
-        let eventosDia = eventos.filter(e => e.fecha === fechaStr);
-
-        eventosDia.forEach(ev=>{
-            let eDiv = document.createElement("div");
-            eDiv.className = "evento";
-            eDiv.style.background = obtenerColor(ev.tipo);
-            eDiv.innerHTML = `${obtenerIcono(ev.tipo)} ${ev.actividad}`;
-            div.appendChild(eDiv);
-        });
-
-        if(eventosDia.length > 0){
-            div.style.borderLeft = `4px solid ${obtenerColor(eventosDia[0].tipo)}`;
-        }
-
-        div.onclick = ()=>abrirModal(fechaStr, eventosDia);
-        cal.appendChild(div);
-    }
-}
-
-/* ===========================
-   MODAL
-   =========================== */
-function abrirModal(fecha, eventos){
-    document.getElementById("modal").style.display="block";
-    document.getElementById("fechaModal").innerText=fecha;
-
-    let lista=document.getElementById("lista");
-    lista.innerHTML="";
-
-    if(eventos.length===0){
-        lista.innerHTML="<li>Sin eventos</li>";
-        return;
-    }
-
-    eventos.forEach(ev=>{
-        let li=document.createElement("li");
-        li.innerHTML=`<b style="color:${obtenerColor(ev.tipo)}">${obtenerIcono(ev.tipo)} ${ev.actividad}</b>
-        <br>Encargado: ${ev.encargado||"-"}
-        <br>Tipo: ${ev.tipo}`;
-        lista.appendChild(li);
     });
-}
 
-function cerrarModal(){
-    document.getElementById("modal").style.display="none";
-}
-
-/* ===========================
-   CONTROLES
-   =========================== */
-function cambiarMes(n){
-    fechaActual.setMonth(fechaActual.getMonth()+n);
     render();
 }
 
+/* RENDER */
+function render(){
+
+    let cal=document.getElementById("calendario");
+    cal.innerHTML="";
+
+    let año=fechaActual.getFullYear();
+    let mes=fechaActual.getMonth();
+
+    document.getElementById("mesActual").innerText=
+        fechaActual.toLocaleDateString("es-ES",{month:"long",year:"numeric"});
+
+    document.getElementById("organizadoresTexto").innerText=
+        "Organizan: "+(organizadoresMes[mes]||"—");
+
+    let primerDia=new Date(año,mes,1).getDay();
+    let diasMes=new Date(año,mes+1,0).getDate();
+
+    for(let i=0;i<primerDia;i++){
+        cal.appendChild(document.createElement("div"));
+    }
+
+    for(let d=1; d<=diasMes; d++){
+
+        let fechaStr=`${año}-${String(mes+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+        let div=document.createElement("div");
+        div.className="dia";
+
+        let fechaObj=new Date(año,mes,d);
+        if(fechaObj.toDateString()===new Date().toDateString()){
+            div.classList.add("hoy");
+        }
+
+        div.innerHTML=`<b>${d}</b>`;
+
+        let filtro=document.getElementById("filtro").value;
+
+        eventos.filter(e=>e.fecha===fechaStr && (!filtro||e.tipo===filtro))
+        .forEach(ev=>{
+            let e=document.createElement("div");
+            e.className="evento";
+            e.style.background=color(ev.tipo);
+            e.innerText=ev.actividad;
+            div.appendChild(e);
+        });
+
+        cal.appendChild(div);
+    }
+
+    cargarLiturgia();
+}
+
+/* GUARDAR */
+async function guardarEvento(){
+
+    let data={
+        fecha:normalizar(f_fecha.value),
+        actividad:f_act.value,
+        tipo:f_tipo.value,
+        encargado:f_enc.value
+    };
+
+    await fetch(API_URL,{
+        method:"POST",
+        body:JSON.stringify(data)
+    });
+
+    alert("Guardado ✅");
+    cargar();
+}
+
+/* CONTROLES */
 function hoy(){
     fechaActual=new Date();
     render();
 }
 
-/* ===========================
-   INICIO
-   =========================== */
-cargarCSV();
+function cambiarMes(n){
+    fechaActual.setMonth(fechaActual.getMonth()+n);
+    render();
+}
+
+/* INIT */
+cargar();
 
 </script>
 
